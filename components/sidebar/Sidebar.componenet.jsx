@@ -43,7 +43,10 @@ const menuGroups = [
         label: "Accomodations",
         route: "#",
         children: [
-          { label: "Accomodation Types", route: "/accomodation-types" },
+          {
+            label: "Accomodation Types",
+            route: "/accomodations/accomodation-types",
+          },
         ],
       },
       {
