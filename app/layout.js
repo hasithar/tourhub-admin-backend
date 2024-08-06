@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader/Loader.component";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./theme";
 import "jsvectormap/dist/jsvectormap.css";
 import "flatpickr/dist/flatpickr.min.css";
 import "@/styles/satoshi.css";
@@ -23,9 +26,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
-        </div>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="dark:bg-boxdark-2 dark:text-bodydark">
+            {loading ? <Loader /> : children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

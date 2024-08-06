@@ -1,42 +1,29 @@
-import Image from "next/image";
+"use client";
 
-const productData = [
-  {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
-  },
-  {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
-  },
-  {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
-  },
-  {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
-  },
-];
+import { DataGrid } from "@mui/x-data-grid";
+import { createTheme, ThemeProvider } from "@mui/material";
 
+const theme = createTheme({
+  typography: {
+    fontFamily: "Satoshi, Arial, sans-serif",
+  },
+  components: {
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: "#e2e8f0",
+          },
+          "& .MuiDataGrid-columnTitle": {
+            fontWeight: "bold",
+          },
+        },
+      },
+    },
+  },
+});
 const Table = (props) => {
-  const { title, cols, rows } = props;
+  const { title, columns, rows, gridOptions } = props;
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -49,42 +36,67 @@ const Table = (props) => {
         </div>
       )}
 
-      {/* <!-- TABLE HEADER --> */}
-      {cols.length > 0 && (
-        <div className="grid grid-cols-6 border-t border-stroke bg-slate-100 px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-          {cols.map((col, key) => (
-            <div
-              className={`col-span-${col?.span ? col?.span : 1} flex items-center`}
-              key={key}
-            >
-              <p className="font-bold">{col?.header}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* <!-- TABLE BODY --> */}
-      {rows.map((row, rowkey) => (
-        <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-          key={rowkey}
-        >
-          {cols.map((col, colkey) => (
-            <div
-              className={`col-span-${col?.span ? col?.span : 1} flex items-center`}
-              key={colkey}
-            >
-              <p className="text-black dark:text-white">{row[col?.accessor]}</p>
-            </div>
-          ))}
-
-          {/* <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">${row.profit}</p>
-          </div> */}
-        </div>
-      ))}
+      <div style={{ width: "100%" }}>
+        <ThemeProvider theme={theme}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 50 },
+              },
+            }}
+            checkboxSelection={gridOptions?.checkboxSelection || false}
+          />
+        </ThemeProvider>
+      </div>
     </div>
   );
 };
 
 export default Table;
+
+// const TableBody = ({ rows, cols, actions, numCols }) => {
+//   return (
+//     <>
+//       {rows.map((row, rowkey) => (
+//         <div
+//           className={`grid ${numCols} border-t border-stroke px-4 py-4.5 dark:border-strokedark md:px-6 2xl:px-7.5`}
+//           key={rowkey}
+//         >
+//           {cols.map((col, colkey) => (
+//             <div
+//               className={`col-span-${col?.span ? col?.span : 1} flex items-center`}
+//               key={colkey}
+//             >
+//               <p className="text-black dark:text-white">{row[col?.accessor]}</p>
+//             </div>
+//           ))}
+
+//           {/* TABLE ACTIONS */}
+//           {actions && (
+//             <div className={`col-span-1 flex items-center space-x-1`}>
+//               {actions.map((action, actionkey) => (
+//                 <RowActions row={row} action={action} key={actionkey} />
+//               ))}
+//             </div>
+//           )}
+//         </div>
+//       ))}
+//     </>
+//   );
+// };
+
+// const RowActions = (props) => {
+//   const { row, action, type = action?.name } = props;
+//   const btnCls = type === "View" ? "bg-primary" : "bg-secondary";
+
+//   return (
+//     <Link
+//       href={action?.href}
+//       className={`${btnCls} inline-flex items-center justify-center rounded-sm px-2 py-1 text-center text-sm font-medium text-white hover:bg-opacity-90`}
+//     >
+//       {action?.name}
+//     </Link>
+//   );
+// };
