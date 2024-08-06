@@ -47,6 +47,12 @@ const Table = (props) => {
               },
             }}
             checkboxSelection={gridOptions?.checkboxSelection || false}
+            getRowId={
+              gridOptions?.getRowId ||
+              function (row) {
+                return row._id;
+              }
+            }
           />
         </ThemeProvider>
       </div>
