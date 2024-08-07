@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
 import Breadcrumb from "@/components/common/Breadcrumbs/Breadcrumb.component";
 import Table from "@/components/ui/Table/Table.component";
+import withGridActions from "@/hoc/withGridActions";
 
 const ListAccomodationTypes = () => {
   const [accomodationTypes, setaccomodationTypes] = useState([]);
+
+  // router
+  const router = useRouter();
 
   useEffect(() => {
     const fetchAccomodationTypes = async () => {
@@ -29,22 +33,36 @@ const ListAccomodationTypes = () => {
         type: "boolean",
         width: 120,
       },
+      {
+        field: "action",
+        headerName: "Action",
+        width: 120,
+        renderCell: withGridActions([
+          {
+            label: "View",
+            onClick: (params) => {
+              router.push(
+                `/accomodations/accomodation-types/${params.row._id}`,
+              );
+            },
+          },
+          {
+            label: "Edit",
+            color: "warning",
+            onClick: (parapms) => {
+              router.push(
+                `/accomodations/accomodation-types/${parapms.row._id}/edit`,
+              );
+            },
+          },
+        ]),
+      },
     ],
     rows: accomodationTypes,
     gridOptions: {
       pageSizes: [10, 20],
       checkboxSelection: false,
     },
-    // actions: [
-    //   {
-    //     name: "View",
-    //     href: "/accomodations/accomodation-types/",
-    //   },
-    //   {
-    //     name: "Edit",
-    //     href: "/accomodation/accomodation-types/edit/",
-    //   },
-    // ],
   };
 
   return (
