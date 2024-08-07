@@ -22,7 +22,7 @@ const withGridActions = (actions) => {
     </Stack>
   );
 
-  // Set a display name for the component
+  // set display name for the component
   GridActionsComponent.displayName = "GridActionsComponent";
 
   return GridActionsComponent;

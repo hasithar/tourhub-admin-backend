@@ -62,7 +62,6 @@ const Table = (props) => {
 
 export default Table;
 
-// const TableBody = ({ rows, cols, actions, numCols }) => {
 //   return (
 //     <>
 //       {rows.map((row, rowkey) => (

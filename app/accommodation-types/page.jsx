@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
-import Breadcrumb from "@/components/common/Breadcrumbs/Breadcrumb.component";
 import Table from "@/components/ui/Table/Table.component";
 import withGridActions from "@/hoc/withGridActions";
 
 const ListAccomodationTypes = () => {
-  const [accomodationTypes, setaccomodationTypes] = useState([]);
+  const [accomodationTypes, setAccomodationTypes] = useState([]);
 
   // router
   const router = useRouter();
@@ -17,7 +16,7 @@ const ListAccomodationTypes = () => {
     const fetchAccomodationTypes = async () => {
       const response = await fetch("/api/accommodation-types");
       const data = await response.json();
-      setaccomodationTypes(data);
+      setAccomodationTypes(data);
     };
 
     fetchAccomodationTypes();
@@ -41,18 +40,14 @@ const ListAccomodationTypes = () => {
           {
             label: "View",
             onClick: (params) => {
-              router.push(
-                `/accomodations/accomodation-types/${params.row._id}`,
-              );
+              router.push(`/accommodation-types/${params.row._id}`);
             },
           },
           {
             label: "Edit",
             color: "warning",
             onClick: (parapms) => {
-              router.push(
-                `/accomodations/accomodation-types/${parapms.row._id}/edit`,
-              );
+              router.push(`/accommodation-types/${parapms.row._id}/edit`);
             },
           },
         ]),
@@ -66,9 +61,18 @@ const ListAccomodationTypes = () => {
   };
 
   return (
-    <DefaultLayout>
-      <Breadcrumb parent={"Accomodations"} pageName="Accomodation Types" />
-
+    <DefaultLayout
+      pageProps={{
+        title: "Accommodation Types",
+        breadcrumbs: [
+          { name: "Dashboard", link: "/dashboard" },
+          {
+            name: "Accommodation Types",
+            link: "/accommodation-types",
+          },
+        ],
+      }}
+    >
       <div className="flex flex-col gap-10">
         <Table
           title="All Accomodation Types"

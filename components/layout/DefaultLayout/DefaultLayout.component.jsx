@@ -2,8 +2,9 @@
 import React, { useState, ReactNode } from "react";
 import Sidebar from "@/components/sidebar/Sidebar.componenet";
 import Header from "@/components/header/Header.component";
+import Breadcrumb from "@/components/common/Breadcrumbs/Breadcrumb.component";
 
-export default function DefaultLayout({ children }) {
+export default function DefaultLayout({ children, pageProps }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -16,6 +17,10 @@ export default function DefaultLayout({ children }) {
 
           <main>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+              <Breadcrumb
+                title={pageProps?.title}
+                breadcrumbs={pageProps?.breadcrumbs}
+              />
               {children}
             </div>
           </main>

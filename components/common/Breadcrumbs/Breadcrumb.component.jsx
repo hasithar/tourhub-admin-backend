@@ -1,17 +1,28 @@
 import Link from "next/link";
 
-const Breadcrumb = ({ parent, pageName }) => {
+const Breadcrumb = ({ title = "", breadcrumbs }) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
+        {title}
       </h2>
 
       <nav>
-        <ol className="flex items-center gap-2">
-          <li className="font-medium">{parent} /</li>
-          <li className="font-medium text-primary">{pageName}</li>
-        </ol>
+        {breadcrumbs?.length > 0 && (
+          <ol className="flex items-center gap-2">
+            {breadcrumbs.map((breadcrumb, index) => (
+              <li key={index}>
+                <Link
+                  href={breadcrumb.link}
+                  className={`font-medium ${index !== breadcrumbs.length - 1 ? "text-black dark:text-white" : "text-primary"}`}
+                >
+                  {index !== 0 && "/ "}
+                  {breadcrumb.name}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        )}
       </nav>
     </div>
   );
