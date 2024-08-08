@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 
-const withGridActions = (actions) => {
-  const GridActionsComponent = (params) => (
+const withActions = (actions) => {
+  const ActionsComponent = (params) => (
     <Stack direction={"row"} spacing={1} sx={{ py: 1.5 }}>
       {actions.map((action, index) => (
         <Button
@@ -23,9 +23,9 @@ const withGridActions = (actions) => {
   );
 
   // set display name for the component
-  GridActionsComponent.displayName = "GridActionsComponent";
+  ActionsComponent.displayName = "ActionsComponent";
 
-  return GridActionsComponent;
+  return ActionsComponent;
 };
 
-export default withGridActions;
+export default withActions;

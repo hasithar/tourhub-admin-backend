@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
 import Table from "@/components/ui/Table/Table.component";
-import withGridActions from "@/hoc/withGridActions";
+import withGridActions from "@/hoc/withActions";
 
 const ListAmenities = () => {
   const [amenities, setAmenities] = useState([]);
