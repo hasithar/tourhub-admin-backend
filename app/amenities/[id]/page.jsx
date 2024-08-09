@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
-import Table from "@/components/ui/Table/Table.component";
 import withRecordActions from "@/hoc/withActions";
-import Link from "next/link";
-import Image from "next/image";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
 
