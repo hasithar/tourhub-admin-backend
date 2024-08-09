@@ -9,7 +9,8 @@ import "jsvectormap/dist/jsvectormap.css";
 import "flatpickr/dist/flatpickr.min.css";
 import "@/styles/satoshi.css";
 import "@/styles/style.css";
-// import "./globals.css";
+import "@/styles/global.scss";
+// import "./globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 

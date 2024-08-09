@@ -65,8 +65,8 @@ const ViewAccommodationType = () => {
           show: true,
           status: accommodationType?.isActive,
           value: accommodationType?.isActive
-            ? "Active Amenity"
-            : "Inactive Amanity",
+            ? "Active Accommodation Type"
+            : "Inactive Accommodation Type",
         }}
       >
         <BlockDescription

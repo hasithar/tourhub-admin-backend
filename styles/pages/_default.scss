@@ -1,0 +1,7 @@
+.content-wrap {
+  .content-block {
+    & + .content-block {
+      margin-top: 2rem;
+    }
+  }
+}

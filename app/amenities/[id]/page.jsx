@@ -64,7 +64,7 @@ const ViewAmenity = () => {
         statusDisplay={{
           show: true,
           status: amenity?.isActive,
-          value: amenity?.isActive ? "Active Amenity" : "Inactive Amanity",
+          value: amenity?.isActive ? "Active Amenity" : "Inactive Amenity",
         }}
       >
         <BlockDescription
