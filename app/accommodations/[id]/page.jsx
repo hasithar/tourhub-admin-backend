@@ -8,6 +8,7 @@ import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
 import BlockContacts from "@/components/ui/dataDisplay/BlockContacts/BlockContacts.component";
 import BlockFeatures from "@/components/ui/dataDisplay/BlockFeatures/BlockFeatures.component";
+import BlockMap from "@/components/ui/dataDisplay/BlockMap/BlockMap.component";
 
 const ViewAccommodation = () => {
   const [accommodation, setAccommodation] = useState([]);
@@ -131,8 +132,8 @@ const ViewAccommodation = () => {
             : "Inactive Accommodation",
         }}
       >
-        <div className="flex flex-row gap-4">
-          <div className="content-wrap w-2/3">
+        <div className="flex flex-row gap-8">
+          <div className="content-wrap w-3/4">
             {accommodationType?.name && (
               <BlockDescription
                 title="Accommodation Type"
@@ -150,9 +151,17 @@ const ViewAccommodation = () => {
             {accommodation?.amenities && (
               <BlockFeatures title="Amenities" features={amenities} />
             )}
+
+            {accommodation?.location?.coordinates && (
+              <BlockMap
+                title="Location"
+                pointName={accommodation?.name}
+                coordinates={accommodation?.location?.coordinates?.coordinates}
+              />
+            )}
           </div>
 
-          <div className="content-wrap w-1/3">
+          <div className="content-wrap w-1/4">
             {accommodation?.contacts && (
               <BlockContacts
                 title="Contact Persons"
