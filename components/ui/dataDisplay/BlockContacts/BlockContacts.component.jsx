@@ -14,9 +14,9 @@ const BlockContacts = (props) => {
         {contacts.length > 0 ? (
           <ul className="mt-2">
             {contacts.map((contact) => (
-              <li key={contact} className="mb-4">
+              <li key={contact?.name} className="mb-4">
                 {contact?.name && (
-                  <span className="block font-normal">
+                  <span className="mb-2 block font-normal">
                     {contact?.name}{" "}
                     {contact?.role && (
                       <i className="text-base font-normal text-orange-600">
@@ -26,12 +26,12 @@ const BlockContacts = (props) => {
                   </span>
                 )}
                 {contact?.email && (
-                  <span className="mb-1 flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     <EmailIcon sx={{ fontSize: "0.875rem" }} /> {contact?.email}
                   </span>
                 )}
                 {contact?.phone && (
-                  <span className="mb-1 flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     <LocalPhoneIcon sx={{ fontSize: "0.875rem" }} />{" "}
                     {contact?.phone}
                   </span>

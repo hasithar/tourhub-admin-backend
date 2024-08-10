@@ -7,16 +7,18 @@ import withRecordActions from "@/hoc/withActions";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
 import BlockContacts from "@/components/ui/dataDisplay/BlockContacts/BlockContacts.component";
+import BlockFeatures from "@/components/ui/dataDisplay/BlockFeatures/BlockFeatures.component";
 
 const ViewAccommodation = () => {
   const [accommodation, setAccommodation] = useState([]);
   const [accommodationType, setAccommodationType] = useState({});
+  const [amenities, setAmenities] = useState([]);
 
   // router
   const router = useRouter();
   const params = useParams();
 
-  // fetch data
+  // fetch accommodations
   useEffect(() => {
     const fetchAccommodation = async () => {
       const response = await fetch(`/api/accommodations/${params.id}`);
@@ -27,7 +29,7 @@ const ViewAccommodation = () => {
     fetchAccommodation();
   }, [params.id]);
 
-  // fetch data
+  // fetch accommodation type
   useEffect(() => {
     const fetchAccommodationType = async () => {
       const response = await fetch(
@@ -39,6 +41,21 @@ const ViewAccommodation = () => {
 
     accommodation?.type && fetchAccommodationType();
   }, [accommodation?.type]);
+
+  // fetch and filter amenities
+  useEffect(() => {
+    const fetchAmenities = async () => {
+      const response = await fetch(`/api/amenities`);
+      const data = await response.json();
+
+      const filteredData = await data.filter((item) =>
+        accommodation?.amenities.includes(item._id),
+      );
+      setAmenities(filteredData);
+    };
+
+    accommodation?.amenities && fetchAmenities();
+  }, [accommodation?.amenities]);
 
   // record actions
   const RecordActions = withRecordActions([
@@ -82,35 +99,7 @@ const ViewAccommodation = () => {
   //         "postalCode": "00700",
   //         "country": "Sri Lanka"
   //     },
-  //     "contacts": [
-  //         {
-  //             "name": "Jane Doe",
-  //             "email": "jane.doe@jetwinghotels.com",
-  //             "phone": "+94 112 558 700 ext 101",
-  //             "role": "Reservation Agent"
-  //         },
-  //         {
-  //             "name": "John Smith",
-  //             "email": "john.smith@jetwinghotels.com",
-  //             "phone": "+94 112 558 700 ext 102",
-  //             "role": "Manager"
-  //         },
-  //         {
-  //             "name": "Alice Brown",
-  //             "email": "alice.brown@jetwinghotels.com",
-  //             "phone": "+94 112 558 700 ext 103",
-  //             "role": "Sales Agent"
-  //         }
-  //     ],
-  //     "amenities": [
-  //         "66a8e0f1649b9dfbb934b5cb",
-  //         "66a8e0f1649b9dfbb934b5cc",
-  //         "66a8e0f1649b9dfbb934b5cd",
-  //         "66a8e0f1649b9dfbb934b5ce",
-  //         "66a8e0f1649b9dfbb934b5d4",
-  //         "66a8e0f1649b9dfbb934b5d0",
-  //         "66a8e0f1649b9dfbb934b5d2"
-  //     ],
+
   //     "numberOfReviews": 0,
 
   // }
@@ -150,10 +139,17 @@ const ViewAccommodation = () => {
                 description={accommodationType?.name}
               />
             )}
-            <BlockDescription
-              title="Description"
-              description={accommodation?.description}
-            />
+
+            {accommodation?.description && (
+              <BlockDescription
+                title="Description"
+                description={accommodation?.description}
+              />
+            )}
+
+            {accommodation?.amenities && (
+              <BlockFeatures title="Amenities" features={amenities} />
+            )}
           </div>
 
           <div className="content-wrap w-1/3">
