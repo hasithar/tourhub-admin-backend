@@ -6,53 +6,26 @@ import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.compo
 import Table from "@/components/ui/Table/Table.component";
 import withGridActions from "@/hoc/withActions";
 
-const ListAccommodations = () => {
-  const [accommodations, setAccommodations] = useState([]);
+const ListActivityTypes = () => {
+  const [activityTypes, setActivityTypes] = useState([]);
 
   // router
   const router = useRouter();
 
   useEffect(() => {
-    const fetchAccommodations = async () => {
-      const response = await fetch("/api/accommodations");
+    const fetchActivityTypes = async () => {
+      const response = await fetch("/api/activity-types");
       const data = await response.json();
-      setAccommodations(data);
+      setActivityTypes(data);
     };
 
-    fetchAccommodations();
+    fetchActivityTypes();
   }, []);
 
   const tableData = {
     columns: [
       { field: "name", headerName: "Name", width: 200 },
       { field: "description", headerName: "Description", flex: 1 },
-      {
-        field: "location",
-        headerName: "Location",
-        width: 150,
-        renderCell: (params) => {
-          const location = params?.row?.location?.city;
-          return location ? location : "N/A";
-        },
-      },
-      {
-        field: "phone",
-        headerName: "Phone",
-        width: 150,
-        renderCell: (params) => {
-          const phone = params?.row?.contactDetails?.phone;
-          return phone ? phone : "N/A";
-        },
-      },
-      {
-        field: "email",
-        headerName: "Email",
-        flex: 1,
-        renderCell: (params) => {
-          const email = params?.row?.contactDetails?.email;
-          return email ? email : "N/A";
-        },
-      },
       {
         field: "isActive",
         headerName: "Is Active",
@@ -67,20 +40,20 @@ const ListAccommodations = () => {
           {
             label: "View",
             onClick: (params) => {
-              router.push(`/accommodations/${params.row._id}`);
+              router.push(`/activity-types/${params.row._id}`);
             },
           },
           {
             label: "Edit",
             color: "warning",
             onClick: (parapms) => {
-              router.push(`/accommodations/${parapms.row._id}/edit`);
+              router.push(`/activity-types/${parapms.row._id}/edit`);
             },
           },
         ]),
       },
     ],
-    rows: accommodations,
+    rows: activityTypes,
     gridOptions: {
       pageSizes: [10, 20],
       checkboxSelection: false,
@@ -90,19 +63,19 @@ const ListAccommodations = () => {
   return (
     <DefaultLayout
       pageProps={{
-        title: "Accommodations",
+        title: "Activity Types",
         breadcrumbs: [
           { name: "Dashboard", link: "/dashboard" },
           {
-            name: "Accommodations",
-            link: "/accommodations",
+            name: "Activity Types",
+            link: "/activity-types",
           },
         ],
       }}
     >
       <div className="flex flex-col gap-10">
         <Table
-          title="All Accommodations"
+          title="All Activity Types"
           columns={tableData.columns}
           rows={tableData.rows}
           gridOptions={tableData.gridOptions}
@@ -113,4 +86,4 @@ const ListAccommodations = () => {
   );
 };
 
-export default ListAccommodations;
+export default ListActivityTypes;

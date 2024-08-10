@@ -22,7 +22,9 @@
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
-    "react-leaflet": "^4.2.1"
+    "react-leaflet": "^4.2.1",
+    "react-photo-album": "^3.0.1",
+    "yet-another-react-lightbox": "^3.21.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",

@@ -6,20 +6,20 @@ import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.compo
 import Table from "@/components/ui/Table/Table.component";
 import withGridActions from "@/hoc/withActions";
 
-const ListAccommodations = () => {
-  const [accommodations, setAccommodations] = useState([]);
+const ListActivities = () => {
+  const [activities, setActivities] = useState([]);
 
   // router
   const router = useRouter();
 
   useEffect(() => {
-    const fetchAccommodations = async () => {
-      const response = await fetch("/api/accommodations");
+    const fetchActivities = async () => {
+      const response = await fetch("/api/activities");
       const data = await response.json();
-      setAccommodations(data);
+      setActivities(data);
     };
 
-    fetchAccommodations();
+    fetchActivities();
   }, []);
 
   const tableData = {
@@ -67,20 +67,20 @@ const ListAccommodations = () => {
           {
             label: "View",
             onClick: (params) => {
-              router.push(`/accommodations/${params.row._id}`);
+              router.push(`/activities/${params.row._id}`);
             },
           },
           {
             label: "Edit",
             color: "warning",
             onClick: (parapms) => {
-              router.push(`/accommodations/${parapms.row._id}/edit`);
+              router.push(`/activities/${parapms.row._id}/edit`);
             },
           },
         ]),
       },
     ],
-    rows: accommodations,
+    rows: activities,
     gridOptions: {
       pageSizes: [10, 20],
       checkboxSelection: false,
@@ -90,19 +90,19 @@ const ListAccommodations = () => {
   return (
     <DefaultLayout
       pageProps={{
-        title: "Accommodations",
+        title: "Activities",
         breadcrumbs: [
           { name: "Dashboard", link: "/dashboard" },
           {
-            name: "Accommodations",
-            link: "/accommodations",
+            name: "Activities",
+            link: "/activities",
           },
         ],
       }}
     >
       <div className="flex flex-col gap-10">
         <Table
-          title="All Accommodations"
+          title="All Activities"
           columns={tableData.columns}
           rows={tableData.rows}
           gridOptions={tableData.gridOptions}
@@ -113,4 +113,4 @@ const ListAccommodations = () => {
   );
 };
 
-export default ListAccommodations;
+export default ListActivities;
