@@ -2,58 +2,61 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Typography, Chip } from "@mui/material";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
 import withRecordActions from "@/hoc/withActions";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
 import BlockContacts from "@/components/ui/dataDisplay/BlockContacts/BlockContacts.component";
+import BlockFeatures from "@/components/ui/dataDisplay/BlockFeatures/BlockFeatures.component";
 import BlockLocation from "@/components/ui/dataDisplay/BlockLocation/BlockLocation.component";
 import BlockGallery from "@/components/ui/dataDisplay/BlockGallery/BlockGallery.component";
 
-const ViewActivity = () => {
-  const [activity, setActivity] = useState([]);
-  const [activityType, setActivityType] = useState({});
-  const [amenities, setAmenities] = useState([]);
+const ViewAttraction = () => {
+  const [attraction, setAttraction] = useState([]);
+  const [attractionType, setAttractionType] = useState({});
 
   // router
   const router = useRouter();
   const params = useParams();
 
-  // fetch activity
+  // fetch attraction
   useEffect(() => {
-    const fetchActivity = async () => {
-      const response = await fetch(`/api/activities/${params.id}`);
+    const fetchAttraction = async () => {
+      const response = await fetch(`/api/attractions/${params.id}`);
       const data = await response.json();
-      setActivity(data);
+      setAttraction(data);
     };
 
-    fetchActivity();
+    fetchAttraction();
   }, [params.id]);
 
-  // fetch activity type
+  // fetch attraction type
   useEffect(() => {
-    const fetchActivityType = async () => {
-      const response = await fetch(`/api/activity-types/${activity?.category}`);
+    const fetchAttractionType = async () => {
+      const response = await fetch(
+        `/api/attraction-types/${attraction?.category}`,
+      );
       const data = await response.json();
-      setActivityType(data);
+      setAttractionType(data);
     };
 
-    activity?.category && fetchActivityType();
-  }, [activity?.category]);
+    attraction?.category && fetchAttractionType();
+  }, [attraction?.category]);
 
   // record actions
   const RecordActions = withRecordActions([
     {
       label: "Edit",
       onClick: (params) => {
-        router.push(`/activities/${params._id}/edit`);
+        router.push(`/attractions/${params._id}/edit`);
       },
     },
     {
       label: "Delete",
       color: "error",
       onClick: (params) => {
-        router.push(`/activities/${params._id}/delete`);
+        router.push(`/attractions/${params._id}/delete`);
       },
     },
   ]);
@@ -61,67 +64,69 @@ const ViewActivity = () => {
   return (
     <DefaultLayout
       pageProps={{
-        title: activity?.name,
+        title: attraction?.name,
         breadcrumbs: [
           { name: "Dashboard", link: "/dashboard" },
           {
-            name: "Activities",
-            link: "/activities",
+            name: "Attractions",
+            link: "/attractions",
           },
           {
-            name: activity?.name,
+            name: attraction?.name,
             link: "#",
           },
         ],
       }}
     >
       <ContentPanel
-        actions={<RecordActions {...activity} />}
+        actions={<RecordActions {...attraction} />}
         statusDisplay={{
           show: true,
-          status: activity?.isActive,
-          value: activity?.isActive ? "Active Activity" : "Inactive Activity",
+          status: attraction?.isActive,
+          value: attraction?.isActive
+            ? "Active Attraction"
+            : "Inactive Attraction",
         }}
       >
         <div className="flex flex-row gap-8">
           <div className="content-wrap w-2/3">
-            {activityType?.name && (
+            {attractionType?.name && (
               <BlockDescription
-                title="Activity Type"
-                description={`${activityType?.name} `}
+                title="Attraction Type"
+                description={`${attractionType?.name} `}
               />
             )}
 
-            {activity?.description && (
+            {attraction?.description && (
               <BlockDescription
                 title="Description"
-                description={activity?.description}
+                description={attraction?.description}
               />
             )}
 
-            {activity?.contacts && (
+            {attraction?.contacts && (
               <BlockContacts
                 title="Contact Persons"
-                contacts={activity?.contacts}
+                contacts={attraction?.contacts}
               />
             )}
 
-            {activity?.images && (
+            {attraction?.images && (
               <BlockGallery
                 title="Images"
-                images={activity?.images}
-                name={activity?.name}
+                images={attraction?.images}
+                name={attraction?.name}
               />
             )}
           </div>
 
           <div className="content-wrap w-1/3">
-            {activity?.location?.coordinates && (
+            {attraction?.location?.coordinates && (
               <BlockLocation
                 title="Location"
-                pointName={activity?.name}
-                location={activity?.location}
-                contactDetails={[activity?.contactDetails]}
+                pointName={attraction?.name}
+                location={attraction?.location}
+                contactDetails={[attraction?.contactDetails]}
               />
             )}
           </div>
@@ -131,4 +136,4 @@ const ViewActivity = () => {
   );
 };
 
-export default ViewActivity;
+export default ViewAttraction;
