@@ -2,6 +2,7 @@
 
 import { DataGrid } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material";
+import React from "react";
 
 const theme = createTheme({
   typography: {
@@ -23,16 +24,18 @@ const theme = createTheme({
   },
 });
 const Table = (props) => {
-  const { title, columns, rows, gridOptions } = props;
+  const { title, columns, rows, gridOptions, buttons } = props;
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       {/* <!-- TABLE TITLE --> */}
       {title && (
-        <div className="px-4 py-6 md:px-6 xl:px-7.5">
+        <div className="flex flex-row justify-between px-4 py-6 md:px-4">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             {title}
           </h4>
+
+          {buttons && <div className="-mb-4 -mr-1 -mt-4">{buttons}</div>}
         </div>
       )}
 

@@ -58,6 +58,16 @@ const ListAccomodationTypes = () => {
       pageSizes: [10, 20],
       checkboxSelection: false,
     },
+    buttons: withGridActions([
+      {
+        label: "Add Accommodation Type",
+        size: "medium",
+        color: "success",
+        onClick: () => {
+          router.push("/accommodation-types/create");
+        },
+      },
+    ]),
   };
 
   return (
@@ -79,7 +89,7 @@ const ListAccomodationTypes = () => {
           columns={tableData.columns}
           rows={tableData.rows}
           gridOptions={tableData.gridOptions}
-          actions={tableData.actions}
+          buttons={<tableData.buttons />}
         />
       </div>
     </DefaultLayout>

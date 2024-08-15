@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const GET = async (req, { params }) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/accommodation-types/${params.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/accommodation-types/${params.id}`,
     );
     const data = await response.json();
     return NextResponse.json(data);
