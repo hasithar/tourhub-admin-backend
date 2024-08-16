@@ -6,6 +6,7 @@ import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.compo
 import withRecordActions from "@/hoc/withActions";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
+import DeleteButton from "@/components/utils/DeleteButton/DeleteButton.component";
 
 const ViewAccommodationType = () => {
   const [accommodationType, setAccommodationType] = useState([]);
@@ -33,13 +34,6 @@ const ViewAccommodationType = () => {
         router.push(`/accommodation-types/${params._id}/edit`);
       },
     },
-    {
-      label: "Delete",
-      color: "error",
-      onClick: (params) => {
-        router.push(`/accommodation-types/${params._id}/delete`);
-      },
-    },
   ]);
 
   return (
@@ -60,7 +54,19 @@ const ViewAccommodationType = () => {
       }}
     >
       <ContentPanel
-        actions={<RecordActions {...accommodationType} />}
+        actions={
+          <>
+            <RecordActions {...accommodationType} />
+            <DeleteButton
+              endpoint="accommodation-types"
+              redirect="/accommodation-types"
+              item={{
+                id: accommodationType?._id,
+                name: accommodationType?.name,
+              }}
+            />
+          </>
+        }
         statusDisplay={{
           show: true,
           status: accommodationType?.isActive,

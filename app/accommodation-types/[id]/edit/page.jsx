@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.component";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import AccommodationTypeForm from "../../components/AccommodationTypeForm/AccommodationTypeForm";
-import { ColorLensRounded } from "@mui/icons-material";
 
 const EditAccommodationType = () => {
   const [accommodationType, setAccommodationType] = useState([]);

@@ -14,10 +14,11 @@ const Breadcrumb = ({ title = "", breadcrumbs }) => {
               <li key={index}>
                 <Link
                   href={breadcrumb.link}
-                  className={`font-medium ${index !== breadcrumbs.length - 1 ? "text-black dark:text-white" : "text-primary"}`}
+                  className={`font-medium ${index !== breadcrumbs?.length - 1 ? "text-black dark:text-white" : "text-primary"}`}
                 >
                   {index !== 0 && "/ "}
-                  {breadcrumb.name}
+                  {breadcrumb?.name?.slice(0, 20) +
+                    (breadcrumb?.name?.length > 20 ? "..." : "")}
                 </Link>
               </li>
             ))}

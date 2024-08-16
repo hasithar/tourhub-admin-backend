@@ -58,57 +58,29 @@ export const PATCH = async (req, { params }) => {
   }
 };
 
-// export const PUT = async (req, { params }) => {
-//   try {
-//     const updatedAccommodation = await req.json();
-//     const response = await fetch(
-//       `http://localhost:3000/accommodations/${params.id}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(updatedAccommodation),
-//       },
-//     );
+// delete
+export const DELETE = async (req, { params }) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/accommodation-types/${params.id}`,
+      {
+        method: "DELETE",
+      },
+    );
 
-//     if (!response.ok) {
-//       throw new Error("Failed to update accommodation");
-//     }
+    if (!response.ok) {
+      throw new Error("Failed to delete accommodation type");
+    }
 
-//     const data = await response.json();
-//     return NextResponse.json(data);
-//   } catch (error) {
-//     console.error("Error updating accommodation:", error);
-//     return NextResponse.json(
-//       { error: "Failed to update accommodation" },
-//       { status: 500 },
-//     );
-//   }
-// };
-
-// export const DELETE = async (req, { params }) => {
-//   try {
-//     const response = await fetch(
-//       `http://localhost:3000/accommodations/${params.id}`,
-//       {
-//         method: "DELETE",
-//       },
-//     );
-
-//     if (!response.ok) {
-//       throw new Error("Failed to delete accommodation");
-//     }
-
-//     return NextResponse.json(
-//       { message: "Accommodation deleted" },
-//       { status: 200 },
-//     );
-//   } catch (error) {
-//     console.error("Error deleting accommodation:", error);
-//     return NextResponse.json(
-//       { error: "Failed to delete accommodation" },
-//       { status: 500 },
-//     );
-//   }
-// };
+    return NextResponse.json(
+      { message: "Accommodation typr deleted" },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error("Error deleting accommodation type:", error);
+    return NextResponse.json(
+      { error: "Failed to delete accommodation type" },
+      { status: 500 },
+    );
+  }
+};

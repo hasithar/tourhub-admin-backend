@@ -21,7 +21,9 @@ const ContentPanel = (props) => {
                   </div>
                 )}
 
-                {actions && <div>{actions}</div>}
+                {actions && (
+                  <div className="flex flex-row gap-2">{actions}</div>
+                )}
               </div>
             </>
           )}
