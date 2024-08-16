@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+// get all
 export const GET = async () => {
   try {
     const response = await fetch(
@@ -23,6 +24,7 @@ export const GET = async () => {
   }
 };
 
+// create
 export const POST = async (req) => {
   try {
     const newAccommodationType = await req.json();

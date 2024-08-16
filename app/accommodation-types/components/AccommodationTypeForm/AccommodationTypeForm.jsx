@@ -6,23 +6,59 @@ import useApiRequest from "@/hooks/useApiRequest.hook";
 import StatusAlert from "@/components/ui/StatusAlert/StatusAlert.component";
 
 const AccommodationTypeForm = (props) => {
-  const { type = "create", data = {} } = props;
+  const { type = "create", data, refetchData } = props;
+
   const { loading, error, success, makeRequest } = useApiRequest();
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  // submit form
+  // form setup
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // handle submit
   const onSubmit = async (data) => {
+    if (type === "create") {
+      createAccommodationType(data);
+    }
+    if (type === "edit") {
+      EditAccommodationType(data);
+    }
+  };
+
+  // create accommodation type
+  const createAccommodationType = async (formData) => {
     try {
-      await makeRequest("/api/accommodation-types", {
+      await makeRequest(`/api/accommodation-types`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
     } catch (err) {
       console.error("Error during request:", err);
+    }
+  };
+
+  // edit accommodation type
+  const EditAccommodationType = async (formData) => {
+    try {
+      await makeRequest(`/api/accommodation-types/${data?._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (err) {
+      console.error("Error during request:", err);
+    } finally {
+      refetchData();
     }
   };
 
@@ -50,12 +86,15 @@ const AccommodationTypeForm = (props) => {
     handleError();
   }, [error]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  // update default values
+  useEffect(() => {
+    if (data) {
+      reset({
+        name: data?.name || "",
+        description: data?.description || "",
+      });
+    }
+  }, [data, reset]);
 
   return (
     <>
@@ -67,7 +106,7 @@ const AccommodationTypeForm = (props) => {
         }}
         severity="success"
         title="Success"
-        message="Accommodation type created successfully!"
+        message={`Accommodation type ${type === "edit" ? "updated" : "created"} successfully!`}
       />
       <StatusAlert
         open={showError}
@@ -87,6 +126,7 @@ const AccommodationTypeForm = (props) => {
           helperText={errors.name ? errors.name.message : ""}
           variant="standard"
           size="small"
+          InputLabelProps={data?.name ? { shrink: true } : null}
         />
         <TextField
           label="Description"
@@ -105,6 +145,7 @@ const AccommodationTypeForm = (props) => {
           helperText={errors.description ? errors.description.message : ""}
           variant="standard"
           size="small"
+          InputLabelProps={data?.description ? { shrink: true } : null}
         />
         <LoadingButton
           loading={loading}
@@ -115,7 +156,9 @@ const AccommodationTypeForm = (props) => {
           size="large"
           sx={{ mt: 2 }}
         >
-          {loading ? "Submitting..." : "Create Accommodation Type"}
+          {loading
+            ? "Submitting..."
+            : `${type === "edit" ? "Update" : "Create"} Accommodation Type`}
         </LoadingButton>
       </Box>
     </>

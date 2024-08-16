@@ -60,7 +60,7 @@ const ListAccomodationTypes = () => {
     },
     buttons: withGridActions([
       {
-        label: "Add Accommodation Type",
+        label: "Create Accommodation Type",
         size: "medium",
         color: "success",
         onClick: () => {
