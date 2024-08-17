@@ -1,65 +1,70 @@
 import { NextResponse } from "next/server";
 
+const apiEndpoint = "amenities";
+const labelPlural = "Amenities";
+const labelSingular = "Amenity";
+
 // get all
 export const GET = async () => {
   try {
-    const response = await fetch("http://localhost:8080/amenities/");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${apiEndpoint}/`,
+    );
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch Amenities, status: ${response.statusText}`,
+        `Failed to fetch ${labelPlural}, status: ${response.statusText}`,
       );
     }
 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error fetchin Amenities:", error);
+    console.error(`Error fetching ${labelPlural}:`, error);
     return NextResponse.json(
-      { error: "Failed to fetch Amenities" },
+      { error: `Failed to fetch ${labelPlural}` },
       { status: 500 },
     );
   }
 };
 
-// import { NextResponse } from "next/server";
+// create
+export const POST = async (req) => {
+  try {
+    const newRecord = await req.json();
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${apiEndpoint}/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRecord),
+      },
+    );
 
-// export const GET = async () => {
-//   try {
-//     const response = await fetch("http://localhost:3000/accommodations");
-//     const data = await response.json();
-//     return NextResponse.json(data);
-//   } catch (error) {
-//     console.error("Error fetching accommodations:", error);
-//     return NextResponse.json(
-//       { error: "Failed to fetch accommodations" },
-//       { status: 500 },
-//     );
-//   }
-// };
+    if (!response.ok) {
+      const errorData = await response.json();
+      let errorMessage = `Failed to create ${labelSingular}`;
 
-// export const POST = async (req) => {
-//   try {
-//     const newAccommodation = await req.json();
-//     const response = await fetch("http://localhost:3000/accommodations", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(newAccommodation),
-//     });
+      // custom error messages
+      if (errorData?.message && errorData?.message?.includes("E11000")) {
+        errorMessage = `${labelSingular} already exists`;
+      }
 
-//     if (!response.ok) {
-//       throw new Error("Failed to add accommodation");
-//     }
+      throw new Error(errorMessage);
+    }
 
-//     const data = await response.json();
-//     return NextResponse.json(data, { status: 201 });
-//   } catch (error) {
-//     console.error("Error adding accommodation:", error);
-//     return NextResponse.json(
-//       { error: "Failed to add accommodation" },
-//       { status: 500 },
-//     );
-//   }
-// };
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error(`Error creating ${labelSingular}:`, error);
+    return NextResponse.json(
+      {
+        error: `Failed to create ${labelSingular}`,
+        reason: error?.message,
+      },
+      { status: 500 },
+    );
+  }
+};

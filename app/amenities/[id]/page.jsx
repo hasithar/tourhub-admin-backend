@@ -6,6 +6,7 @@ import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.compo
 import withRecordActions from "@/hoc/withActions";
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import BlockDescription from "@/components/ui/dataDisplay/BlockDescription/BlockDescription.component";
+import DeleteButton from "@/components/utils/DeleteButton/DeleteButton.component";
 
 const ViewAmenity = () => {
   const [amenity, setAmenity] = useState([]);
@@ -33,13 +34,6 @@ const ViewAmenity = () => {
         router.push(`/amenities/${params._id}/edit`);
       },
     },
-    {
-      label: "Delete",
-      color: "error",
-      onClick: (params) => {
-        router.push(`/amenities/${params._id}/delete`);
-      },
-    },
   ]);
 
   return (
@@ -60,7 +54,19 @@ const ViewAmenity = () => {
       }}
     >
       <ContentPanel
-        actions={<RecordActions {...amenity} />}
+        actions={
+          <>
+            <RecordActions {...amenity} />
+            <DeleteButton
+              endpoint="/amenities"
+              redirect="/amenities"
+              item={{
+                id: amenity?._id,
+                name: amenity?.name,
+              }}
+            />
+          </>
+        }
         statusDisplay={{
           show: true,
           status: amenity?.isActive,

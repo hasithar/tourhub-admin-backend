@@ -58,6 +58,16 @@ const ListAmenities = () => {
       pageSizes: [10, 20],
       checkboxSelection: false,
     },
+    buttons: withGridActions([
+      {
+        label: "Create Amenity",
+        size: "medium",
+        color: "success",
+        onClick: () => {
+          router.push("/amenities/create");
+        },
+      },
+    ]),
   };
 
   return (
@@ -80,6 +90,7 @@ const ListAmenities = () => {
           rows={tableData.rows}
           gridOptions={tableData.gridOptions}
           actions={tableData.actions}
+          buttons={<tableData.buttons />}
         />
       </div>
     </DefaultLayout>
