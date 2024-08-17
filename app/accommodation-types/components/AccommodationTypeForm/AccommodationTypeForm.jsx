@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { TextField, Box } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import {
+  TextField,
+  Box,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import useApiRequest from "@/hooks/useApiRequest.hook";
 import StatusAlert from "@/components/ui/StatusAlert/StatusAlert.component";
@@ -17,6 +23,7 @@ const AccommodationTypeForm = (props) => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -92,6 +99,7 @@ const AccommodationTypeForm = (props) => {
       reset({
         name: data?.name || "",
         description: data?.description || "",
+        isActive: data?.isActive || false,
       });
     }
   }, [data, reset]);
@@ -147,6 +155,26 @@ const AccommodationTypeForm = (props) => {
           size="small"
           InputLabelProps={data?.description ? { shrink: true } : null}
         />
+
+        <FormGroup>
+          <Controller
+            name="isActive"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={
+                  <Switch
+                    {...field}
+                    checked={field.value}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                  />
+                }
+                label="Active"
+              />
+            )}
+          />
+        </FormGroup>
+
         <LoadingButton
           loading={loading}
           type="submit"

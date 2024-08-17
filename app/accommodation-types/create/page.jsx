@@ -4,7 +4,7 @@ import DefaultLayout from "@/components/layout/DefaultLayout/DefaultLayout.compo
 import ContentPanel from "@/components/ui/ContentPanel/ContentPanel.component";
 import AccommodationTypeForm from "../components/AccommodationTypeForm/AccommodationTypeForm";
 
-const NewAccommodationType = () => {
+const CreateAccommodationType = () => {
   return (
     <DefaultLayout
       pageProps={{
@@ -31,4 +31,4 @@ const NewAccommodationType = () => {
   );
 };
 
-export default NewAccommodationType;
+export default CreateAccommodationType;
