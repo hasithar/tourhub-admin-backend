@@ -8,7 +8,7 @@ const mapIcon = new L.Icon({
 });
 
 const BlockLocation = (props) => {
-  const { title = "", location, pointName, contactDetails } = props;
+  const { title = "", location = {}, pointName, contactDetails } = props;
   const { coordinates, ...locationDetails } = location;
 
   return (

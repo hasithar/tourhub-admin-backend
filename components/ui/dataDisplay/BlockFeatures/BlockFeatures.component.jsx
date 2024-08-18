@@ -6,7 +6,9 @@ const BlockFeatures = (props) => {
   return (
     <div className="content-block content-block--features">
       <div className="mx-auto text-left">
-        <h4 className="font-semibold text-black dark:text-white">{title}:</h4>
+        {title && (
+          <h4 className="font-semibold text-black dark:text-white">{title}:</h4>
+        )}
 
         {features?.length > 0 ? (
           <ul className="mt-2 flex flex-row flex-wrap gap-4">
@@ -20,7 +22,7 @@ const BlockFeatures = (props) => {
             ))}
           </ul>
         ) : (
-          <p className="mt-2">No {title} available</p>
+          <p className="mt-2">{title ?? `No ${title} available`}</p>
         )}
       </div>
     </div>

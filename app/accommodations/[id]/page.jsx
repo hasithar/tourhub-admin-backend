@@ -149,14 +149,12 @@ const ViewAccommodation = () => {
           </div>
 
           <div className="content-wrap w-1/3">
-            {accommodation?.location?.coordinates && (
-              <BlockLocation
-                title="Location"
-                pointName={accommodation?.name}
-                location={accommodation?.location}
-                contactDetails={[accommodation?.contactDetails]}
-              />
-            )}
+            <BlockLocation
+              title="Contact Property"
+              pointName={accommodation?.name}
+              location={accommodation?.location}
+              contactDetails={[accommodation?.contactDetails]}
+            />
           </div>
         </div>
       </ContentPanel>
